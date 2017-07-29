@@ -34,8 +34,7 @@ public class EnnemyWalk : MonoBehaviour {
 		_spriteRenderer.flipX = _direction == MoveDirection.Right;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		var factor = (int)_direction * Time.fixedDeltaTime * unitsPerSecond;
 		_rb2d.position += Vector2.right * factor;
 	}
