@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114679547817930802}
   - component: {fileID: 95546486176002506}
   m_Layer: 13
-  m_Name: Zombile (10)
+  m_Name: Zompile
   m_TagString: zombile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61327288058086696
 BoxCollider2D:
   m_ObjectHideFlags: 1

@@ -31,11 +31,18 @@ public class EnnemyWalk : MonoBehaviour {
 		_rb2d = GetComponent<Rigidbody2D>();
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 		_direction = Random.Range(0, 2) == 1 ? MoveDirection.Right : MoveDirection.Left;
+		_spriteRenderer.flipX = _direction == MoveDirection.Right;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		var factor = (int)_direction * Time.fixedDeltaTime * unitsPerSecond;
 		_rb2d.position += Vector2.right * factor;
+	}
+	
+	public void SwitchDirection()
+	{
+		_direction = _direction == MoveDirection.Right ? MoveDirection.Left : MoveDirection.Right;
+		_spriteRenderer.flipX = !_spriteRenderer.flipX;
 	}
 }

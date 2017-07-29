@@ -64,6 +64,4 @@ public class CanWalk : MonoBehaviour {
         _rb2d.position += Vector2.right * factor;
 
     }
-
-    
 }
