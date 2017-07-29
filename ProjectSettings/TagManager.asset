@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Plateforms
+  - Ground
+  - Walls
+  - Player
+  - Ennemies
+  - Obstacles
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 857030123
+    locked: 0
+  - name: Plateforms
+    uniqueID: 3043435
+    locked: 0
+  - name: Ground
+    uniqueID: 571167987
+    locked: 0
+  - name: Dynamics
+    uniqueID: 4134673179
+    locked: 0
+  - name: Occulters
+    uniqueID: 3425498215
     locked: 0
