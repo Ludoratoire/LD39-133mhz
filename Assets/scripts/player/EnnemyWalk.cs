@@ -45,4 +45,10 @@ public class EnnemyWalk : MonoBehaviour {
 		_direction = _direction == MoveDirection.Right ? MoveDirection.Left : MoveDirection.Right;
 		_spriteRenderer.flipX = !_spriteRenderer.flipX;
 	}
+
+	public void SetDirection(MoveDirection direction)
+	{
+		_direction = direction;
+		_spriteRenderer.flipX = _direction == MoveDirection.Right;
+	}
 }
