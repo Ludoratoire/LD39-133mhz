@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour {
     public GameObject player;
     public Camera gameCamera;
     public int powerAvailable = 133;
-    public int score = 0;
     public int speedFactor = 100;
+	public int life = 3;
     public List<GameTask> taskList;
 
     protected RetroPixel _retroPixel;
