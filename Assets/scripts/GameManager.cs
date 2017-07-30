@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     }
 
     public int powerAvailable = 133;
+	public int life = 3;
+	public int score = 0;
     public List<GameTask> taskList;
 
 	void Start () {
