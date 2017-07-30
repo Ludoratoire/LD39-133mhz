@@ -40,8 +40,8 @@ public class GravityTask : GameTask {
         if (intValue == currentIntValue)
             return "Task " + name + " value updated.";
 
-        if (intValue < currentIntValue) {
-            mgr.powerAvailable -= delta;
+        if (intValue > currentIntValue) {
+            mgr.powerAvailable += delta;
             currentValue = value;
             Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
 
@@ -49,7 +49,7 @@ public class GravityTask : GameTask {
         }
         else if (mgr.powerAvailable > delta) {
             currentValue = value;
-            GameManager.Instance.powerAvailable += delta;
+            GameManager.Instance.powerAvailable -= delta;
             Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
 
             return "Task " + name + " value updated.";

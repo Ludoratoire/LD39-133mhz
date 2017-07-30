@@ -38,17 +38,17 @@ public class ResolutionTask : GameTask {
             return "Task " + name + " value updated.";
 
         if (intValue < currentIntValue) {
-            mgr.powerAvailable -= delta;
+            mgr.powerAvailable += delta;
             currentValue = value;
             mgr.SetRetroFactor(intValue);
-            consumption += delta;
+            consumption -= delta;
 
             return "Task " + name + " value updated.";
         }
         else if (mgr.powerAvailable > delta) {
             currentValue = value;
-            GameManager.Instance.powerAvailable += delta;
-            consumption -= delta;
+            GameManager.Instance.powerAvailable -= delta;
+            consumption += delta;
             mgr.SetRetroFactor(intValue);
 
             return "Task " + name + " value updated.";
