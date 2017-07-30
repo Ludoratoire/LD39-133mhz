@@ -14,15 +14,17 @@ public class LuminosityTask : GameTask {
         description = "What illuminates your path.";
         base.Enable();
         base.SetValue("100");
+        requireParameter = true;
+        example = "LUMINOSITY X\n X should be an integer between 0 and 100.\n";
         _lights = new List<Light>(Light.GetLights(LightType.Directional, 0));
         _lights.AddRange(Light.GetLights(LightType.Point, 0));
         _lights.AddRange(Light.GetLights(LightType.Spot, 0));
     }
 
-    public new string SetValue(string value) {
+    public override string SetValue(string value) {
         int intValue;
         if (!int.TryParse(value, out intValue))
-            return "Integer value expected";
+            return "LUMINOSITY parameter should be an integer between 0 and 100.\n";
 
         var mgr = GameManager.Instance;
         var delta = (int)(100 - Mathf.Abs(currentValue - intValue)) / 10;

@@ -8,6 +8,8 @@ public class CanJump : MonoBehaviour {
 
     public float inputThreshold = 0.1f;
     public float jumpForce = 10f;
+    public LayerMask resetJump;
+    public Collider2D groundCollider;
 
     // Components
 
@@ -36,6 +38,8 @@ public class CanJump : MonoBehaviour {
 
         if(_requestJump) {
             _rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (_rb2d.velocity.y > jumpForce)
+                _rb2d.velocity = new Vector2(_rb2d.velocity.x, jumpForce);
             _requestJump = false;
             _touchingGround = false;
         }
@@ -44,9 +48,16 @@ public class CanJump : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
 
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ground")) {
-            _touchingGround = true;
+        var isTouchingGround = false;
+        foreach(var c in collision.contacts) {
+            if(c.otherCollider == groundCollider) {
+                isTouchingGround = true;
+                break;
+            }
         }
+
+        if (isTouchingGround && resetJump == (resetJump| (1 << collision.gameObject.layer)))
+            _touchingGround = true;
 
     }
 }
