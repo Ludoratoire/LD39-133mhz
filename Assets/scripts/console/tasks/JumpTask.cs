@@ -14,6 +14,7 @@ public class JumpTask : GameTask {
         currentValue = "";
         example = "JUMP\n";
         _jumpScript = GameManager.Instance.player.GetComponent<CanJump>();
+        _jumpScript.enabled = false;
     }
 
     public override string Disable() {
