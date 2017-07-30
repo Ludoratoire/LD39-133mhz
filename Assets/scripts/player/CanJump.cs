@@ -43,7 +43,7 @@ public class CanJump : MonoBehaviour {
             _requestJump = false;
             _touchingGround = false;
         }
-
+        
     }
 
     void OnCollisionEnter2D(Collision2D collision) {

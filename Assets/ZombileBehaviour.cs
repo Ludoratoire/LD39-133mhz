@@ -25,7 +25,7 @@ public class ZombileBehaviour : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		followPlayer();
+		FollowPlayer();
 	}
 
 	// Update is called once per frame
@@ -35,7 +35,7 @@ public class ZombileBehaviour : MonoBehaviour
 	}
 	
 	// Adapter la direction du Zombie en fonction de celle du joueur
-	private void followPlayer()
+	private void FollowPlayer()
 	{
 		// Joueur sur la gauche du zombie ?
 		if (_player.transform.position.x < _transform.position.x)
@@ -57,20 +57,8 @@ public class ZombileBehaviour : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	public void Kill()
 	{
-		// Contact avec le joueur
-		if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-		{
-			Debug.Log("ZombileBehaviour.OnCollisionEnter2D");
-			RaycastHit2D[] hitTop = Physics2D.RaycastAll(transform.position, Vector2.up);
-			// Joueur arrive par le haut
-			if (hitTop.Length > 1 && hitTop[1].collider != null)
-			{
-				float distance = Mathf.Abs(hitTop[1].point.y - transform.position.y);
-				Debug.Log("ZombileBehaviour.OnCollisionEnter2D hitTop ! distance : " + distance);
-				DestroyObject(gameObject);
-			}
-		}
+		DestroyObject(gameObject);
 	}
 }
