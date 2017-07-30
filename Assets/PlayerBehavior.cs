@@ -60,4 +60,9 @@ public class PlayerBehavior : MonoBehaviour
             _animator.SetTrigger("playerJump");
         }
     }
+
+    public void OnKillEnnemy()
+    {
+        GetComponent<Animator>().SetTrigger("playerHit");
+    }
 }

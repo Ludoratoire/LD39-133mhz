@@ -39,6 +39,8 @@ public class CanKillEnnemy : MonoBehaviour
                     if (zombileBehaviour != null)
                     {
                         zombileBehaviour.Kill();
+                        GetComponent<PlayerBehavior>().OnKillEnnemy();
+                        
                         // Faire rebondir le joueur
                         GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounceForce, ForceMode2D.Impulse);
                     }
