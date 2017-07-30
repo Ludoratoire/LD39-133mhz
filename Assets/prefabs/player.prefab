@@ -25,6 +25,9 @@ GameObject:
   - component: {fileID: 114941388637360436}
   - component: {fileID: 70406266668489104}
   - component: {fileID: 58707641588793876}
+  - component: {fileID: 114103618871823130}
+  - component: {fileID: 95797301724082484}
+  - component: {fileID: 114042485464176182}
   m_Layer: 12
   m_Name: player
   m_TagString: Player
@@ -39,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173070058375900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.72, y: -3.8, z: 0}
+  m_LocalPosition: {x: -12.25, y: -0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,6 +98,46 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.7413454, y: 2}
   m_Direction: 0
+--- !u!95 &95797301724082484
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173070058375900}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5c0d5972892c95347be404df7d461b35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114042485464176182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173070058375900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e212975820805724fae006adc7a43e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114103618871823130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1173070058375900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68cf1a1575ae92443bff95efc20135cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceForce: 5
 --- !u!114 &114708296173870406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -157,12 +200,12 @@ SpriteRenderer:
   m_SortingLayerID: -160294117
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b88d08b6e73d184f94793666304fdab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90f55d0f16e9cbb43a46cacafa7b6690, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 1.0625, y: 1.8125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

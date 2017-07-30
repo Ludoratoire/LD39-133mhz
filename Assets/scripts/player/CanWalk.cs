@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,6 +63,15 @@ public class CanWalk : MonoBehaviour {
 
         var factor = (int)_direction * Time.fixedDeltaTime * unitsPerSecond;
         _rb2d.position += Vector2.right * factor;
+    }
 
+    public MoveDirection GetMoveDirection()
+    {
+        return _direction;
+    }
+    
+    public Boolean IsMoveDirection(MoveDirection direction)
+    {
+        return _direction == direction;
     }
 }
