@@ -18,6 +18,7 @@ public class ConsoleScript : MonoBehaviour {
     private string _lastFilterParam;
 
     private List<string> taskSetFilters = new List<string> { "GRAVITY", "LUMINOSITY", "MONSTERS", "MOBILITY", "RESOLUTION", "SOUND" }; 
+    private List<string> taskKillFilters = new List<string> { "GRAVITY", "LUMINOSITY", "MONSTERS", "MOBILITY", "RESOLUTION", "SOUND", "PLATEFORM", "IA", "SCROLLING", "JUMP", "COLLISION", "SPRITE", "ANIMATION", "CLOTHE" }; 
 
 	void Start () {
 
@@ -71,10 +72,6 @@ public class ConsoleScript : MonoBehaviour {
         _lastFilterParam = "";
     }
 
-    private bool HasValidFilter() {
-        return _filters.ContainsKey(_lastFilter);
-    }
-
     public class ConsoleCommandAttribute : Attribute {
 
         public string Binding { get; private set; }
@@ -105,7 +102,52 @@ public class ConsoleScript : MonoBehaviour {
 
     [ConsoleCommand("taskkill")]
     void TaskKill() {
+        if (_lastFilter.Length <= 0) {
+            consoleOutput.text += "Missing filter for command " + _lastCommand + "\n";
+            return;
+        }
 
+        if(_lastFilterParam.Length > 0) {
+            consoleOutput.text += "Wrong syntax !\n taskkill " + _lastFilter + " expects no parameter.\n";
+            return;
+        }
+
+        if (!taskKillFilters.Contains(_lastFilter)) {
+            consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
+            return;
+        }
+
+        var mgr = GameManager.Instance;
+        GameTask task = mgr.GetTask(_lastFilter);
+        if (task == null)
+            consoleOutput.text += "No task " + _lastFilter + "\n";
+        else
+            consoleOutput.text += task.Disable() + "\n";
+    }
+
+    [ConsoleCommand("taskstart")]
+    void TaskStart() {
+        if (_lastFilter.Length <= 0) {
+            consoleOutput.text += "Missing filter for command " + _lastCommand + "\n";
+            return;
+        }
+
+        if (_lastFilterParam.Length > 0) {
+            consoleOutput.text += "Wrong syntax !\n taskstart " + _lastFilter + " expects no parameter.\n";
+            return;
+        }
+
+        if (!taskKillFilters.Contains(_lastFilter)) {
+            consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
+            return;
+        }
+
+        var mgr = GameManager.Instance;
+        GameTask task = mgr.GetTask(_lastFilter);
+        if (task == null)
+            consoleOutput.text += "No task " + _lastFilter + "\n";
+        else
+            consoleOutput.text += task.Enable() + "\n";
     }
 
     [ConsoleCommand("taskset")]
@@ -115,29 +157,24 @@ public class ConsoleScript : MonoBehaviour {
             return;
         }
 
-        if(!HasValidFilter()) {
-            consoleOutput.text += "Filter " + _lastFilter + " not found.\n";
-            return;
-        }
-
         if(!taskSetFilters.Contains(_lastFilter)) {
             consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
             return;
         }
 
-        _filters[_lastFilter].Invoke(this, null);
         var mgr = GameManager.Instance;
         GameTask task = mgr.GetTask(_lastFilter);
-        if(task == null)
-            consoleOutput.text += "No task " + _lastFilter + "\n";
-        else
-            consoleOutput.text += task.SetValue(_lastFilterParam) + "\n";
 
         if (_lastFilterParam.Length == 0 && task.requireParameter) {
             consoleOutput.text += "Missing parameter for filter " + _lastFilter + ".\n";
             consoleOutput.text += _lastCommand + " " + task.example;
             return;
         }
+
+        if(task == null)
+            consoleOutput.text += "No task " + _lastFilter + "\n";
+        else
+            consoleOutput.text += task.SetValue(_lastFilterParam) + "\n";
     }
 
     [ConsoleCommand("help")]

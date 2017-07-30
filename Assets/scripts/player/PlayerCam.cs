@@ -6,13 +6,13 @@ public class PlayerCam : MonoBehaviour {
 
     public GameObject target;
 
-    private Vector3 _delta;
-
-	void Start () {
-        _delta = gameObject.transform.position - target.transform.position;
-	}
+    public ParallaxLayer[] parallaxLayers;
 
     void LateUpdate () {
+        var delta = target.transform.position.x - gameObject.transform.position.x;
         gameObject.transform.position = new Vector3(target.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        foreach(var layer in parallaxLayers) {
+            layer.MoveLayer(delta);
+        }
 	}
 }
