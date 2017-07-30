@@ -1,20 +1,20 @@
-﻿using System.Collections;
+﻿using AlpacaSound;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-public class GravityTask : GameTask {
+public class ResolutionTask : GameTask {
 
-    private Vector2 _defaultGravity;
-
-    public GravityTask() {
-        name = "GRAVITY";
-        consumption = 0;
-        description = "What keeps your feet on the ground.";
-        _defaultGravity = Physics2D.gravity;
+    public ResolutionTask() {
+        name = "RESOLUTION";
+        consumption = 30;
+        description = "What pleases your eyes (or not).";
         requireParameter = true;
-        example = "GRAVITY X\nX should be an integer between 10 and 100.\n";
-        currentValue = "100";
+        example = "RESOLUTION X\nX should be an integer between 1 and 100.\n";
         base.Enable();
+        currentValue = "100";
     }
 
     public override string Disable() {
@@ -31,35 +31,35 @@ public class GravityTask : GameTask {
             return "GRAVITY parameter should be an integer between 0 and 100.";
         }
 
-        if (intValue < 0 || intValue > 100)
-            return "GRAVITY parameter should be between 0 and 100";
-
         var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = Mathf.Abs(currentIntValue - intValue);
+        var delta = Mathf.Abs(currentIntValue - intValue) * 30 / 100;
         if (intValue == currentIntValue)
             return "Task " + name + " value updated.";
 
-        if (intValue > currentIntValue) {
+        if (intValue < currentIntValue) {
             mgr.powerAvailable += delta;
             currentValue = value;
-            Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
+            mgr.SetRetroFactor(intValue);
+            consumption -= delta;
 
             return "Task " + name + " value updated.";
         }
         else if (mgr.powerAvailable > delta) {
             currentValue = value;
             GameManager.Instance.powerAvailable -= delta;
-            Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
+            consumption += delta;
+            mgr.SetRetroFactor(intValue);
 
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
+
     }
 
     public override int GetConsumption() {
-        return 100 - int.Parse(base.currentValue);
+        return consumption;
     }
 
 }

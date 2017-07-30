@@ -35,6 +35,7 @@ public class ZombileBehaviour : MonoBehaviour
     {
     }
 
+
     // Adapter la direction du Zombie en fonction de celle du joueur
     // Uniquement si le joueur est au même niveau que le zombie (y)
     // Et si il n'y a aucun obstacle entre le joueur et le zombie

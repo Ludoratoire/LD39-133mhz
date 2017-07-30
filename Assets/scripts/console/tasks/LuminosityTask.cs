@@ -12,8 +12,8 @@ public class LuminosityTask : GameTask {
         name = "LUMINOSITY";
         consumption = 0;
         description = "What illuminates your path.";
+        currentValue = "100";
         base.Enable();
-        base.SetValue("100");
         requireParameter = true;
         example = "LUMINOSITY X\n X should be an integer between 0 and 100.\n";
         _lights = new List<Light>(Light.GetLights(LightType.Directional, 0));
@@ -27,30 +27,35 @@ public class LuminosityTask : GameTask {
             return "LUMINOSITY parameter should be an integer between 0 and 100.\n";
 
         var mgr = GameManager.Instance;
-        var delta = (int)(100 - Mathf.Abs(currentValue - intValue)) / 10;
-        if (intValue == currentValue)
+        var currentIntValue = int.Parse(currentValue);
+        var delta = (int)(100 - Mathf.Abs(currentIntValue - intValue)) / 10;
+        if (intValue == currentIntValue)
             return "Task " + name + " value updated.";
 
-        if (intValue < currentValue) {
+        if (intValue < currentIntValue) {
             mgr.powerAvailable += delta;
             foreach(var l in _lights) {
-                l.intensity = l.intensity * intValue / currentValue;
+                l.intensity = l.intensity * intValue / currentIntValue;
             }
-            currentValue = intValue;
+            currentValue = value;
 
             return "Task " + name + " value updated.";
         }
         else if (mgr.powerAvailable > delta) {
             GameManager.Instance.powerAvailable -= delta;
             foreach (var l in _lights) {
-                l.intensity = l.intensity * intValue / currentValue;
+                l.intensity = l.intensity * intValue / currentIntValue;
             }
-            currentValue = intValue;
+            currentValue = value;
 
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
+    }
+
+    public override int GetConsumption() {
+        return (100 - int.Parse(base.currentValue)) / 10;
     }
 
 }
