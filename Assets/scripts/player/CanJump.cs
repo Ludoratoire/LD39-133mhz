@@ -38,7 +38,7 @@ public class CanJump : MonoBehaviour {
     void FixedUpdate() {
 
         if(_requestJump) {
-            _rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            _rb2d.AddForce(Vector2.up * jumpForce * GameManager.Instance.speedFactor / 100, ForceMode2D.Impulse);
             if (_rb2d.velocity.y > jumpForce)
                 _rb2d.velocity = new Vector2(_rb2d.velocity.x, jumpForce);
             _requestJump = false;

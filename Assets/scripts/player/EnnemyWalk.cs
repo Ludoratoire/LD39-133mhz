@@ -35,7 +35,7 @@ public class EnnemyWalk : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		var factor = (int)_direction * Time.fixedDeltaTime * unitsPerSecond;
+		var factor = (int)_direction * Time.fixedDeltaTime * unitsPerSecond * GameManager.Instance.speedFactor / 100;
 		_rb2d.position += Vector2.right * factor;
 	}
 	

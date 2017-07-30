@@ -15,8 +15,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public GameObject player;
     public Camera gameCamera;
     public int powerAvailable = 133;
+    public int score = 0;
+    public int speedFactor = 100;
     public List<GameTask> taskList;
 
     protected RetroPixel _retroPixel;
@@ -36,6 +39,10 @@ public class GameManager : MonoBehaviour {
         taskList.Add(new GravityTask());
         taskList.Add(new LuminosityTask());
         taskList.Add(new ResolutionTask());
+        taskList.Add(new JumpTask());
+        taskList.Add(new MobilityTask());
+        taskList.Add(new CollisionTask());
+        taskList.Add(new ScrollingTask());
     }
 	
     // Tasks

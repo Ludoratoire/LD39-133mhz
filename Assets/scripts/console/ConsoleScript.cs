@@ -13,9 +13,9 @@ public class ConsoleScript : MonoBehaviour {
     protected Dictionary<string, MethodInfo> _methods;
     protected Dictionary<string, MethodInfo> _filters;
 
-    private string _lastCommand;
-    private string _lastFilter;
-    private string _lastFilterParam;
+    private string _lastCommand = "";
+    private string _lastFilter = "";
+    private string _lastFilterParam = "";
 
     private List<string> taskSetFilters = new List<string> { "GRAVITY", "LUMINOSITY", "MONSTERS", "MOBILITY", "RESOLUTION", "SOUND" }; 
     private List<string> taskKillFilters = new List<string> { "GRAVITY", "LUMINOSITY", "MONSTERS", "MOBILITY", "RESOLUTION", "SOUND", "PLATEFORM", "IA", "SCROLLING", "JUMP", "COLLISION", "SPRITE", "ANIMATION", "CLOTHE" }; 
