@@ -11,14 +11,16 @@ public abstract class GameTask {
     public bool enabled = true;
     public int currentValue = 0;
     public string name;
+    public bool requireParameter = false;
+    public string example;
 
-    public string Disable() {
+    public virtual string Disable() {
         enabled = false;
         GameManager.Instance.powerAvailable += consumption;
         return "Task " + name + " killed.";
     }
 
-    public string Enable() {
+    public virtual string Enable() {
         var mgr = GameManager.Instance;
         if (mgr.powerAvailable > consumption) {
             enabled = true;
@@ -29,7 +31,7 @@ public abstract class GameTask {
             return "Not enough power to enabled task " + name + ".";
     }
 
-    public string SetValue(string value) {
+    public virtual string SetValue(string value) {
         int intValue;
         if (!int.TryParse(value, out intValue))
             return "Integer value expected";
@@ -53,7 +55,7 @@ public abstract class GameTask {
             return "Not enough power to update task " + name + " value.";
     }
 
-    public int GetConsumption() {
+    public virtual int GetConsumption() {
         return consumption;
     }
 }

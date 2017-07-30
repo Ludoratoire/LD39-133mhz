@@ -126,6 +126,18 @@ public class ConsoleScript : MonoBehaviour {
         }
 
         _filters[_lastFilter].Invoke(this, null);
+        var mgr = GameManager.Instance;
+        GameTask task = mgr.GetTask(_lastFilter);
+        if(task == null)
+            consoleOutput.text += "No task " + _lastFilter + "\n";
+        else
+            consoleOutput.text += task.SetValue(_lastFilterParam) + "\n";
+
+        if (_lastFilterParam.Length == 0 && task.requireParameter) {
+            consoleOutput.text += "Missing parameter for filter " + _lastFilter + ".\n";
+            consoleOutput.text += _lastCommand + " " + task.example;
+            return;
+        }
     }
 
     [ConsoleCommand("help")]
@@ -137,84 +149,4 @@ public class ConsoleScript : MonoBehaviour {
         }
     }
 
-    [ConsoleFilter("GRAVITY")]
-    void FilterGravity() {
-        var mgr = GameManager.Instance;
-        GravityTask gravity;
-        switch(_lastCommand) {
-            case "taskset":
-                if (_lastFilterParam.Length == 0) {
-                    consoleOutput.text += "Missing parameter for filter GRAVITY.\n";
-                    consoleOutput.text += (_lastCommand + " GRAVITY X.\n");
-                    consoleOutput.text += "X should be an integer between 10 and 100.\n";
-                    return;
-                }
-
-                gravity = (GravityTask)mgr.GetTask("GRAVITY");
-                if (gravity == null)
-                    consoleOutput.text += "No task gravity\n";
-                else {
-                    consoleOutput.text += gravity.SetValue(_lastFilterParam) + "\n";
-                }
-            
-                break;
-            case "taskkill":
-                gravity = (GravityTask)mgr.GetTask("GRAVITY");
-                if (gravity == null)
-                    consoleOutput.text += "No task gravity.\n";
-                else
-                    consoleOutput.text += gravity.Disable() + "\n";
-                break;
-            case "taskstart":
-                gravity = (GravityTask)mgr.GetTask("GRAVITY");
-                if (gravity == null)
-                    consoleOutput.text += "No task gravity.\n";
-                else
-                    consoleOutput.text += gravity.Enable() + "\n";
-                break;
-            default:
-                consoleOutput.text += "Command not found.\n";
-                break;
-        }
-    }
-
-    [ConsoleFilter("LUMINOSITY")]
-    void FilterLuminosity() {
-        var mgr = GameManager.Instance;
-        LuminosityTask luminosity;
-        switch (_lastCommand) {
-            case "taskset":
-                if (_lastFilterParam.Length == 0) {
-                    consoleOutput.text += "Missing parameter for filter LUMINOSITY.\n";
-                    consoleOutput.text += (_lastCommand + " LUMINOSITY X.\n");
-                    consoleOutput.text += "X should be an integer between 0 and 100.\n";
-                    return;
-                }
-
-                luminosity = (LuminosityTask)mgr.GetTask("LUMINOSITY");
-                if (luminosity == null)
-                    consoleOutput.text += "No task luminosity\n";
-                else {
-                    consoleOutput.text += luminosity.SetValue(_lastFilterParam) + "\n";
-                }
-
-                break;
-            case "taskkill":
-                luminosity = (LuminosityTask)mgr.GetTask("LUMINOSITY");
-                if (luminosity == null)
-                    consoleOutput.text += "No task luminosity.\n";
-                else
-                    consoleOutput.text += luminosity.Disable() + "\n";
-                break;
-            case "taskstart":
-                luminosity = (LuminosityTask)mgr.GetTask("LUMINOSITY");
-                if (luminosity == null)
-                    consoleOutput.text += "No task luminosity.\n";
-                else
-                    consoleOutput.text += luminosity.Enable() + "\n";
-                break;
-            default:
-                break;
-        }
-    }
 }
