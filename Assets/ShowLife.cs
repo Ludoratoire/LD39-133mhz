@@ -18,8 +18,6 @@ public class ShowLife : MonoBehaviour {
 	void Update () {
 		
 		Image[] images = gameObject.GetComponentsInChildren<Image> ();
-		print ("images.Length = "+images.Length);
-		print ("_nbrHP = "+_nbrHP);
 		int life = GameManager.Instance.life;
 
 		if (this._nbrHP != life) {

@@ -6007,6 +6007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111a13b270cb7164580df54abb613f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameCamera: {fileID: 0}
   powerAvailable: 133
   life: 3
   score: 0
@@ -6812,6 +6813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1167158159}
+  parallaxLayers: []
 --- !u!81 &1366095091
 AudioListener:
   m_ObjectHideFlags: 0
@@ -8239,7 +8241,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 2
   m_Text: 
 --- !u!222 &1770684261
 CanvasRenderer:
