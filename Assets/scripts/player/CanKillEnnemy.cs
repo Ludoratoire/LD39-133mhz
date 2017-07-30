@@ -21,7 +21,7 @@ public class CanKillEnnemy : MonoBehaviour
 		// Contact avec un ennemi
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Ennemies"))
 		{
-			Debug.Log("CanKillEnnemy.OnCollisionEnter2D");
+//			Debug.Log("CanKillEnnemy.OnCollisionEnter2D");
 			RaycastHit2D[] hitsBottom = Physics2D.RaycastAll(transform.position, Vector2.down);
 
 			foreach (RaycastHit2D raycastHit in hitsBottom)

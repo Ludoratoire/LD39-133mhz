@@ -9,7 +9,7 @@ public abstract class GameTask {
     public int consumption = 0;
     public string description;
     public bool enabled = true;
-    public int currentValue = 0;
+    public string currentValue = "0";
     public string name;
     public bool requireParameter = false;
     public string example;
@@ -37,17 +37,18 @@ public abstract class GameTask {
             return "Integer value expected";
 
         var mgr = GameManager.Instance;
-        var delta = 100 - Mathf.Abs(currentValue - intValue);
-        if (intValue == currentValue)
+        var currentIntValue = int.Parse(currentValue);
+        var delta = 100 - Mathf.Abs(currentIntValue - intValue);
+        if (intValue == currentIntValue)
             return "Task " + name + " value updated.";
 
-        if (intValue < currentValue) {
+        if (intValue < currentIntValue) {
             mgr.powerAvailable += delta;
-            currentValue = intValue;
+            currentValue = value;
             return "Task " + name + " value updated.";
         }
         else if (mgr.powerAvailable > delta) {
-            currentValue = intValue;
+            currentValue = value;
             GameManager.Instance.powerAvailable -= delta;
             return "Task " + name + " value updated.";
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,5 +60,10 @@ public class CanJump : MonoBehaviour {
         if (isTouchingGround && resetJump == (resetJump| (1 << collision.gameObject.layer)))
             _touchingGround = true;
 
+    }
+
+    public Boolean IsTouchingGround()
+    {
+        return _touchingGround;
     }
 }

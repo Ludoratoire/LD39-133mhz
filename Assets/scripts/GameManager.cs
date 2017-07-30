@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AlpacaSound;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,10 +15,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public Camera gameCamera;
     public int powerAvailable = 133;
 	public int life = 3;
 	public int score = 0;
     public List<GameTask> taskList;
+
+    protected RetroPixel _retroPixel;
 
 	void Start () {
         if (_sInstance == null)
@@ -27,18 +31,29 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
+        _retroPixel = gameCamera.GetComponent<RetroPixel>();
+        _retroPixel.enabled = false;
+
         taskList = new List<GameTask>();
         taskList.Add(new GravityTask());
         taskList.Add(new LuminosityTask());
+        taskList.Add(new ResolutionTask());
     }
 	
-	void Update () {
-		
-	}
-
     // Tasks
 
     public GameTask GetTask(string name) {
         return taskList.Find(x => x.name == name);
+    }
+
+    // Retro Pixel
+    public void SetRetroFactor(int factor) {
+        if (factor == 100)
+            _retroPixel.enabled = false;
+        else
+            _retroPixel.enabled = true;
+
+        _retroPixel.horizontalResolution = (int) (1280 * factor / 100);
+        _retroPixel.verticalResolution = (int) (768 * factor / 100);
     }
 }
