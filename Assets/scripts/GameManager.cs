@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour {
 
     public Camera gameCamera;
     public int powerAvailable = 133;
+	public int life = 3;
+	public int score = 0;
     public List<GameTask> taskList;
 
     protected RetroPixel _retroPixel;
