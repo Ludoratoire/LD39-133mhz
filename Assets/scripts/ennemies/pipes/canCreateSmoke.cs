@@ -7,13 +7,14 @@ public class canCreateSmoke : MonoBehaviour {
 	public float cooldown;
 	private float _nextSmoke;
     private float _stopSmokeAt;
+    private AudioSource _source;
 	public ParticleSystem particleSys;
 
     public BoxCollider2D boxCollider;
 
 	// Use this for initialization
 	void Start () {
-
+        _source = GetComponent<AudioSource>();
 		this.cooldown = 4;
 		this._nextSmoke = Time.realtimeSinceStartup + cooldown;
 
@@ -32,6 +33,7 @@ public class canCreateSmoke : MonoBehaviour {
             this._stopSmokeAt = Time.realtimeSinceStartup + this.particleSys.main.duration;
 			this._nextSmoke = Time.realtimeSinceStartup + this.cooldown;
             boxCollider.enabled = true;
+            _source.Play();
 
 		}
 

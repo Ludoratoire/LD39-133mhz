@@ -8,13 +8,14 @@ public class GravityTask : GameTask {
 
     public GravityTask() {
         name = "GRAVITY";
+        cost = 100;
         consumption = 0;
         description = "What keeps your feet on the ground.";
         _defaultGravity = Physics2D.gravity;
         requireParameter = true;
-        example = "GRAVITY X. X should be an integer between 10 and 100.\n";
+        example = "GRAVITY X. X should be an integer between 10 and 100.";
         currentValue = "100";
-        base.Enable();
+        enabled = true;
     }
 
     public override string Disable() {
@@ -34,28 +35,19 @@ public class GravityTask : GameTask {
         if (intValue < 0 || intValue > 100)
             return "GRAVITY parameter should be between 0 and 100";
 
-        var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = Mathf.Abs(currentIntValue - intValue);
-        if (intValue == currentIntValue)
-            return "Task " + name + " value updated.";
-
-        if (intValue > currentIntValue) {
-            mgr.powerAvailable += delta;
+        var mgr = GameManager.Instance;
+        var currentTotal = mgr.PowerAvailable;
+        var newConsumption = Mathf.CeilToInt(cost - intValue);
+        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
             currentValue = value;
             Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
-
-            return "Task " + name + " value updated.";
-        }
-        else if (mgr.powerAvailable > delta) {
-            currentValue = value;
-            GameManager.Instance.powerAvailable -= delta;
-            Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
-
+            consumption = newConsumption;
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
+
     }
 
     public override int GetConsumption() {

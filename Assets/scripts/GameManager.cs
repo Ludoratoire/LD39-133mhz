@@ -19,7 +19,15 @@ public class GameManager : MonoBehaviour {
     public GameObject player;
     public GameObject startPos;
     public Camera gameCamera;
-    public int powerAvailable = 133;
+    public int maxPower = 133;
+    public int PowerAvailable {
+        get {
+            var total = 0;
+            foreach (var t in taskList)
+                total += t.consumption;
+            return maxPower - total;
+        }
+    }
     public int speedFactor = 100;
 	public int life = 3;
     public int score = 0;

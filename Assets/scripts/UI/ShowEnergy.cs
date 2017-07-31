@@ -16,7 +16,7 @@ public class ShowEnergy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		int actualEnergy = GameManager.Instance.powerAvailable;
+		int actualEnergy = GameManager.Instance.PowerAvailable;
 
 		if (this._energy != actualEnergy) {
 

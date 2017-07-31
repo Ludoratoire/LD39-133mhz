@@ -9,15 +9,18 @@ public class CollisionTask : GameTask {
     public CollisionTask() {
         name = "COLLISION";
         consumption = 10;
+        cost = 10;
         description = "What stops you.";
         currentValue = "";
         base.Enable();
-        example = "COLLISION\n";
+        example = "COLLISION";
     }
 
     public override string Disable() {
+        if (!enabled)
+            return "Task " + name + " already killed.";
+
         var msg = base.Disable();
-        consumption = 0;
         var collides = GameObject.FindObjectsOfType<Collider2D>();
         foreach(var c in collides) {
             c.isTrigger = true;
@@ -26,12 +29,14 @@ public class CollisionTask : GameTask {
     }
 
     public override string Enable() {
+        if (enabled)
+            return "Task " + name + " already started.";
+
         var msg = base.Enable();
         var collides = GameObject.FindObjectsOfType<Collider2D>();
         foreach (var c in collides) {
             c.isTrigger = false;
         }
-        consumption = 10;
         return msg;
     }
 

@@ -10,9 +10,10 @@ public class ResolutionTask : GameTask {
     public ResolutionTask() {
         name = "RESOLUTION";
         consumption = 30;
+        cost = 30;
         description = "What pleases your eyes (or not).";
         requireParameter = true;
-        example = "RESOLUTION X\nX should be an integer between 1 and 100.\n";
+        example = "RESOLUTION X. X should be an integer between 1 and 100.";
         base.Enable();
         currentValue = "100";
     }
@@ -31,31 +32,18 @@ public class ResolutionTask : GameTask {
             return "GRAVITY parameter should be an integer between 0 and 100.";
         }
 
-        var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = Mathf.Abs(currentIntValue - intValue) * 30 / 100;
-        if (intValue == currentIntValue)
-            return "Task " + name + " value updated.";
-
-        if (intValue < currentIntValue) {
-            mgr.powerAvailable += delta;
+        var mgr = GameManager.Instance;
+        var currentTotal = mgr.PowerAvailable;
+        var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
+        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
             currentValue = value;
             mgr.SetRetroFactor(intValue);
-            consumption -= delta;
-
-            return "Task " + name + " value updated.";
-        }
-        else if (mgr.powerAvailable > delta) {
-            currentValue = value;
-            GameManager.Instance.powerAvailable -= delta;
-            consumption += delta;
-            mgr.SetRetroFactor(intValue);
-
+            consumption = newConsumption;
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
-
     }
 
     public override int GetConsumption() {

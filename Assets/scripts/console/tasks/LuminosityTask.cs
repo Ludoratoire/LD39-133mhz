@@ -11,11 +11,12 @@ public class LuminosityTask : GameTask {
     public LuminosityTask() {
         name = "LUMINOSITY";
         consumption = 0;
+        cost = 0;
         description = "What illuminates your path.";
         currentValue = "100";
         base.Enable();
         requireParameter = true;
-        example = "LUMINOSITY X\n X should be an integer between 0 and 100.\n";
+        example = "LUMINOSITY X. X should be an integer between 0 and 100.";
         _lights = new List<Light>(Light.GetLights(LightType.Directional, 0));
         _lights.AddRange(Light.GetLights(LightType.Point, 0));
         _lights.AddRange(Light.GetLights(LightType.Spot, 0));
@@ -32,34 +33,23 @@ public class LuminosityTask : GameTask {
     public override string SetValue(string value) {
         int intValue;
         if (!int.TryParse(value, out intValue) || intValue < 0 || intValue > 100)
-            return "LUMINOSITY parameter should be an integer between 0 and 100.\n";
+            return "LUMINOSITY parameter should be an integer between 0 and 100.";
 
-        var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = (int)(100 - Mathf.Abs(currentIntValue - intValue)) / 10;
-        if (intValue == currentIntValue)
-            return "Task " + name + " value updated.";
-
-        if (intValue < currentIntValue) {
-            mgr.powerAvailable += delta;
-            foreach(var l in _lights) {
-                l.intensity = l.intensity * intValue / currentIntValue;
-            }
+        var mgr = GameManager.Instance;
+        var currentTotal = mgr.PowerAvailable;
+        var newConsumption = Mathf.CeilToInt((float)(100 - intValue) / 10f);
+        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
             currentValue = value;
-
-            return "Task " + name + " value updated.";
-        }
-        else if (mgr.powerAvailable > delta) {
-            GameManager.Instance.powerAvailable -= delta;
             foreach (var l in _lights) {
                 l.intensity = l.intensity * intValue / currentIntValue;
             }
-            currentValue = value;
-
+            consumption = newConsumption;
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
+
     }
 
     public override int GetConsumption() {

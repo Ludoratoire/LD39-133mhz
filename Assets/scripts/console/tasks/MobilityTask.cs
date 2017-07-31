@@ -9,11 +9,12 @@ public class MobilityTask : GameTask {
     public MobilityTask() {
         name = "MOBILITY";
         consumption = 50;
+        cost = 50;
         description = "What makes you move.";
         currentValue = "100";
         requireParameter = true;
         base.Enable();
-        example = "MOBILITY X\nX should be an integer between 0 and 100\n";
+        example = "MOBILITY X. X should be an integer between 0 and 100";
     }
 
     public override string Disable() {
@@ -31,31 +32,18 @@ public class MobilityTask : GameTask {
             return "MOBILITY parameter should be an integer between 0 and 100.";
         }
 
-        var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = Mathf.Abs(currentIntValue - intValue) / 2;
-        if (intValue == currentIntValue)
-            return "Task " + name + " value updated.";
-
-        if (intValue < currentIntValue) {
-            mgr.powerAvailable += delta;
+        var mgr = GameManager.Instance;
+        var currentTotal = mgr.PowerAvailable;
+        var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
+        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
             currentValue = value;
             mgr.speedFactor = intValue;
-            consumption -= delta;
-
-            return "Task " + name + " value updated.";
-        }
-        else if (mgr.powerAvailable > delta) {
-            currentValue = value;
-            mgr.speedFactor = intValue;
-            GameManager.Instance.powerAvailable -= delta;
-            consumption += delta;
-
+            consumption = newConsumption;
             return "Task " + name + " value updated.";
         }
         else
             return "Not enough power to update task " + name + " value.";
-
     }
 
 }

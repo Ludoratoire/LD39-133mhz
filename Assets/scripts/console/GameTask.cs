@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class GameTask {
 
     public int consumption = 0;
+    public int cost = 0;
     public string description;
     public bool enabled = true;
     public string currentValue = "0";
@@ -15,16 +16,22 @@ public abstract class GameTask {
     public string example;
 
     public virtual string Disable() {
+        if (!enabled)
+            return "Task " + name + " already killed.";
+
         enabled = false;
-        GameManager.Instance.powerAvailable += consumption;
+        consumption = cost;
         return "Task " + name + " killed.";
     }
 
     public virtual string Enable() {
+        if (enabled)
+            return "Task " + name + " already started.";
+
         var mgr = GameManager.Instance;
-        if (mgr.powerAvailable > consumption) {
+        if (mgr.PowerAvailable > consumption) {
             enabled = true;
-            mgr.powerAvailable -= consumption;
+            consumption = cost;
             return "Task " + name + " enabled.";
         }
         else
@@ -36,20 +43,13 @@ public abstract class GameTask {
         if (!int.TryParse(value, out intValue))
             return "Integer value expected";
 
-        var mgr = GameManager.Instance;
         var currentIntValue = int.Parse(currentValue);
-        var delta = 100 - Mathf.Abs(currentIntValue - intValue);
-        if (intValue == currentIntValue)
-            return "Task " + name + " value updated.";
-
-        if (intValue < currentIntValue) {
-            mgr.powerAvailable += delta;
+        var mgr = GameManager.Instance;
+        var currentTotal = mgr.PowerAvailable;
+        var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
+        if(currentTotal - consumption + newConsumption < mgr.maxPower) {
             currentValue = value;
-            return "Task " + name + " value updated.";
-        }
-        else if (mgr.powerAvailable > delta) {
-            currentValue = value;
-            GameManager.Instance.powerAvailable -= delta;
+            consumption = newConsumption;
             return "Task " + name + " value updated.";
         }
         else

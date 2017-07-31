@@ -22,6 +22,7 @@ public class PlayerBehavior : MonoBehaviour
     public float recoveryTime = 2f;
 
     private float _nextDamageTime = 0;
+    private AudioSource _source;
 
     // Use this for initialization
     void Start()
@@ -29,6 +30,7 @@ public class PlayerBehavior : MonoBehaviour
         _canWalk = GetComponent<CanWalk>();
         _canJump = GetComponent<CanJump>();
         _animator = GetComponent<Animator>();
+        _source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -62,6 +64,7 @@ public class PlayerBehavior : MonoBehaviour
         if (!_isJumpingPrev && _isJumping)
         {
             _animator.SetTrigger("playerJump");
+            _source.Play();
         }
 
         if(gameObject.transform.position.y < fallLimit) {

@@ -9,25 +9,31 @@ public class JumpTask : GameTask {
 
     public JumpTask() {
         name = "JUMP";
-        consumption = 20;
+        consumption = 0;
+        cost = 20;
         description = "What gets you high.";
         currentValue = "";
-        example = "JUMP\n";
+        example = "JUMP";
         _jumpScript = GameManager.Instance.player.GetComponent<CanJump>();
         _jumpScript.enabled = false;
+        enabled = false;
     }
 
     public override string Disable() {
+        if (!enabled)
+            return "Task " + name + " already killed.";
+
         _jumpScript.enabled = false;
         var msg = base.Disable();
-        consumption = 0;
         return msg;
     }
 
     public override string Enable() {
+        if (enabled)
+            return "Task " + name + " already started.";
+
         _jumpScript.enabled = true;
         var msg = base.Enable();
-        consumption = 20;
         return msg;
     }
 
