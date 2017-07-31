@@ -17,6 +17,8 @@ public class PlayerBehavior : MonoBehaviour
     private CanJump _canJump;
     
     private Animator _animator;
+
+    public float fallLimit = -10f;
     
 
     // Use this for initialization
@@ -59,5 +61,21 @@ public class PlayerBehavior : MonoBehaviour
         {
             _animator.SetTrigger("playerJump");
         }
+
+        if(gameObject.transform.position.y < fallLimit) {
+            GameManager.Instance.ResetPlayerPos();
+        }
     }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Ennemies")) {
+            var mgr = GameManager.Instance;
+            mgr.life--;
+            if(mgr.life <= 0) {
+                mgr.score = 0;
+                GameManager.Instance.ResetPlayerPos();
+            }
+        }
+    }
+
 }
