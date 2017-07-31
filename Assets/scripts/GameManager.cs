@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -23,8 +24,13 @@ public class GameManager : MonoBehaviour {
 	public int life = 3;
     public int score = 0;
     public List<GameTask> taskList;
+    public GameObject LevelModel;
+    public Text bigMessage;
+    public GameObject restartButton;
+    public int nextKillPoint = 1;
 
     protected RetroPixel _retroPixel;
+    private GameObject _levelInstance;
 
 	void Start () {
         if (_sInstance == null)
@@ -33,6 +39,10 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
             return;
         }
+
+        LevelModel.SetActive(false);
+        _levelInstance = Object.Instantiate(LevelModel);
+        _levelInstance.SetActive(true);
 
         _retroPixel = gameCamera.GetComponent<RetroPixel>();
         _retroPixel.enabled = false;
@@ -69,5 +79,36 @@ public class GameManager : MonoBehaviour {
             c.enabled = true;
         }
         player.transform.position = startPos.transform.position;
+    }
+
+    public void ResetLevel() {
+        GameObject.Destroy(_levelInstance);
+        _levelInstance = Object.Instantiate(LevelModel);
+        _levelInstance.SetActive(true);
+        ResetPlayerPos();
+        bigMessage.enabled = false;
+        restartButton.SetActive(false);
+        score = 0;
+        life = 3;
+        Time.timeScale = 1;
+    }
+
+    public void Lose() {
+        bigMessage.text = "YOU LOSE !";
+        bigMessage.enabled = true;
+        restartButton.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void Victory() {
+        bigMessage.text = "YOU WIN !";
+        bigMessage.enabled = true;
+        restartButton.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void KillScoreUp() {
+        score += nextKillPoint;
+        nextKillPoint++;
     }
 }

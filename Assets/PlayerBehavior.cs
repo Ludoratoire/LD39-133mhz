@@ -66,7 +66,8 @@ public class PlayerBehavior : MonoBehaviour
 
         if(gameObject.transform.position.y < fallLimit) {
             ReceiveDamage();
-            GameManager.Instance.ResetPlayerPos();
+            if(Time.timeScale != 0)
+                GameManager.Instance.ResetPlayerPos();
         }
     }
 
@@ -80,10 +81,9 @@ public class PlayerBehavior : MonoBehaviour
         if(currentTime > _nextDamageTime) {
             var mgr = GameManager.Instance;
             mgr.life--;
+            mgr.nextKillPoint = 1;
             if (mgr.life <= 0) {
-                mgr.score = 0;
-                mgr.life = 3;
-                mgr.ResetPlayerPos();
+                mgr.Lose();
             }
             _nextDamageTime = currentTime + recoveryTime;
         }
