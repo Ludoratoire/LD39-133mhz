@@ -16,11 +16,18 @@ public class MobilityTask : GameTask {
         example = "MOBILITY X\nX should be an integer between 0 and 100\n";
     }
 
+    public override string Disable() {
+        return "Can't disable task " + name + ".";
+    }
+
+    public override string Enable() {
+        return "Can't enable task " + name + ".";
+    }
 
     public override string SetValue(string value) {
 
         int intValue;
-        if (!int.TryParse(value, out intValue)) {
+        if (!int.TryParse(value, out intValue) || intValue < 0 || intValue > 100) {
             return "MOBILITY parameter should be an integer between 0 and 100.";
         }
 

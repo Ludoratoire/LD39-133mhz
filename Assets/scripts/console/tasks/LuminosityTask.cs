@@ -21,9 +21,17 @@ public class LuminosityTask : GameTask {
         _lights.AddRange(Light.GetLights(LightType.Spot, 0));
     }
 
+    public override string Disable() {
+        return "Can't disable task " + name + ".";
+    }
+
+    public override string Enable() {
+        return "Can't enable task " + name + ".";
+    }
+
     public override string SetValue(string value) {
         int intValue;
-        if (!int.TryParse(value, out intValue))
+        if (!int.TryParse(value, out intValue) || intValue < 0 || intValue > 100)
             return "LUMINOSITY parameter should be an integer between 0 and 100.\n";
 
         var mgr = GameManager.Instance;

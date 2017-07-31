@@ -205,11 +205,18 @@ public class ConsoleScript : MonoBehaviour {
             return;
         }
 
+        PrintLog("[ COMMANDS ]");
         PrintLog("tasklist : list main tasks.\n");
         PrintLog("taskset : update the value of a task.\n");
         PrintLog("taskkill : kill a task.\n");
         PrintLog("taskstart : start a task.\n");
         PrintLog("help : display this text.\n");
+
+        PrintLog("[ TASKS ]");
+        var mgr = GameManager.Instance;
+        foreach (var task in mgr.taskList) {
+            PrintLog(task.name + " : " + task.description + "\n");
+        }
     }
 
 }

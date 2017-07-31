@@ -36,6 +36,8 @@ public class ZombileBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.transform.position.y < -50)
+            GameObject.Destroy(gameObject);
     }
 
 
@@ -114,9 +116,9 @@ public class ZombileBehaviour : MonoBehaviour
     // Detection des murs invisbles pour les ennemis
     void OnTriggerEnter2D(Collider2D collider2D)
     {
-        if (_fighting) {
-            return;
-        }
+        //if (_fighting) {
+        //    return;
+        //}
         
         if (collider2D.gameObject.layer == LayerMask.NameToLayer("EnnemyWalls"))
         {

@@ -27,7 +27,7 @@ public class ResolutionTask : GameTask {
 
     public override string SetValue(string value) {
         int intValue;
-        if (!int.TryParse(value, out intValue)) {
+        if (!int.TryParse(value, out intValue) || intValue < 0 || intValue > 100) {
             return "GRAVITY parameter should be an integer between 0 and 100.";
         }
 

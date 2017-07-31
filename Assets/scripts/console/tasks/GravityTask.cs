@@ -22,7 +22,7 @@ public class GravityTask : GameTask {
     }
 
     public override string Enable() {
-        return "Can't disable task " + name + ".";
+        return "Can't enable task " + name + ".";
     }
 
     public override string SetValue(string value) {

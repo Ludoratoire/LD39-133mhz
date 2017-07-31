@@ -12,5 +12,11 @@ public class PitBehaviour : MonoBehaviour {
             }
         }
 
+        if (collision.gameObject.tag == "zombile") {
+            foreach (var c in collision.gameObject.GetComponents<Collider2D>()) {
+                c.enabled = false;
+            }
+        }
+
     }
 }
