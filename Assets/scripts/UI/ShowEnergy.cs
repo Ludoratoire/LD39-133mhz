@@ -22,7 +22,7 @@ public class ShowEnergy : MonoBehaviour {
 
 			_energy = actualEnergy;
 
-			this._component.text = "Energy : " + _energy;
+			this._component.text = "CPU : " + _energy;
 		}
 	}
 }

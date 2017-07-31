@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour {
         bigMessage.enabled = false;
         restartButton.SetActive(false);
         score = 0;
+        nextKillPoint = 1;
         life = 3;
         Time.timeScale = 1;
     }

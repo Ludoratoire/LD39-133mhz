@@ -39,7 +39,7 @@ public class GravityTask : GameTask {
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
         var newConsumption = Mathf.CeilToInt(cost - intValue);
-        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
+        if (currentTotal - consumption + newConsumption > 0) {
             currentValue = value;
             Physics2D.gravity = new Vector2(0, (_defaultGravity.y * intValue) / 100);
             consumption = newConsumption;

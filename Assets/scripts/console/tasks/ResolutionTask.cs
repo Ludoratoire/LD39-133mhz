@@ -29,14 +29,14 @@ public class ResolutionTask : GameTask {
     public override string SetValue(string value) {
         int intValue;
         if (!int.TryParse(value, out intValue) || intValue < 0 || intValue > 100) {
-            return "GRAVITY parameter should be an integer between 0 and 100.";
+            return "RESOLUTION parameter should be an integer between 0 and 100.";
         }
 
         var currentIntValue = int.Parse(currentValue);
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
         var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
-        if (currentTotal - consumption + newConsumption < mgr.maxPower) {
+        if (currentTotal - consumption + newConsumption > 0) {
             currentValue = value;
             mgr.SetRetroFactor(intValue);
             consumption = newConsumption;

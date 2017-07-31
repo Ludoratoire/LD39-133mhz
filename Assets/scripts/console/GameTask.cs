@@ -47,7 +47,7 @@ public abstract class GameTask {
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
         var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
-        if(currentTotal - consumption + newConsumption < mgr.maxPower) {
+        if(currentTotal - consumption + newConsumption > 0) {
             currentValue = value;
             consumption = newConsumption;
             return "Task " + name + " value updated.";
