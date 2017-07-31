@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public GameObject player;
+    public GameObject startPos;
     public Camera gameCamera;
     public int powerAvailable = 133;
     public int speedFactor = 100;
@@ -61,5 +62,12 @@ public class GameManager : MonoBehaviour {
 
         _retroPixel.horizontalResolution = (int) (1280 * factor / 100);
         _retroPixel.verticalResolution = (int) (768 * factor / 100);
+    }
+
+    public void ResetPlayerPos() {
+        foreach (var c in player.GetComponents<Collider2D>()) {
+            c.enabled = true;
+        }
+        player.transform.position = startPos.transform.position;
     }
 }
