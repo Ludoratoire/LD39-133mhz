@@ -13,13 +13,12 @@ public class PlayerBehavior : MonoBehaviour
     private Boolean _isIdle;
 
     private CanWalk _canWalk;
-    
+
     private CanJump _canJump;
-    
+
     private Animator _animator;
 
     public float fallLimit = -10f;
-    
 
     // Use this for initialization
     void Start()
@@ -49,13 +48,13 @@ public class PlayerBehavior : MonoBehaviour
         {
             _animator.SetTrigger("playerIdle");
         }
-        
+
         // Trigger playerWalking animation ?
         if (!_isWalkingPrev && _isWalking)
         {
             _animator.SetTrigger("playerWalking");
         }
-        
+
         // Trigger playerJumping animation ?
         if (!_isJumpingPrev && _isJumping)
         {
@@ -78,4 +77,8 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    public void OnKillEnnemy()
+    {
+        GetComponent<Animator>().SetTrigger("playerHit");
+    }
 }
