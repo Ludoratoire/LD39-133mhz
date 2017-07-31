@@ -36,7 +36,7 @@ public class MobilityTask : GameTask {
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
         var newConsumption = Mathf.CeilToInt((float)intValue * (float)cost / 100f);
-        if (currentTotal - consumption + newConsumption > 0) {
+        if (currentTotal + consumption - newConsumption >= 0) {
             currentValue = value;
             mgr.speedFactor = intValue;
             consumption = newConsumption;

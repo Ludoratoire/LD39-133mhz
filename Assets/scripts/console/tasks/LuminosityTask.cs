@@ -39,7 +39,7 @@ public class LuminosityTask : GameTask {
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
         var newConsumption = Mathf.CeilToInt((float)(100 - intValue) / 10f);
-        if (currentTotal - consumption + newConsumption > 0) {
+        if (currentTotal + consumption - newConsumption >= 0) {
             currentValue = value;
             foreach (var l in _lights) {
                 l.intensity = l.intensity * intValue / currentIntValue;
