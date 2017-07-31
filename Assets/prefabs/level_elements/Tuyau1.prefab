@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4378719305662618}
   - component: {fileID: 61004859439795940}
+  - component: {fileID: 114376844051454306}
   m_Layer: 13
   m_Name: hitboxSmoke
   m_TagString: Untagged
@@ -153,6 +154,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 8}
   m_EdgeRadius: 0
+--- !u!114 &114376844051454306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1318444119002860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9064d85a8efe10d45b9e57b2d5884346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114382542463925724
 MonoBehaviour:
   m_ObjectHideFlags: 1
