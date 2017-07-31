@@ -11,6 +11,7 @@ public class ConsoleScript : MonoBehaviour {
     public InputField consoleInput;
     public GameObject consoleOutput;
     public GameObject consoleLinePrefab;
+    public GameObject consoleClearLine;
     public ScrollRect consoleScroll;
 
     protected Dictionary<string, MethodInfo> _methods;
@@ -55,10 +56,8 @@ public class ConsoleScript : MonoBehaviour {
             consoleInput.text = "";
             ClearInput();
         }
-        else {
-            consoleInput.ActivateInputField();
-        }
 
+        consoleInput.ActivateInputField();
     }
 
     // Commands
@@ -86,6 +85,7 @@ public class ConsoleScript : MonoBehaviour {
         var line = GameObject.Instantiate(consoleLinePrefab, consoleOutput.transform);
         line.GetComponent<Text>().text = text;
         consoleInput.transform.SetAsLastSibling();
+        consoleClearLine.transform.SetAsLastSibling();
         Canvas.ForceUpdateCanvases();
         consoleScroll.verticalNormalizedPosition = 0;
         Canvas.ForceUpdateCanvases();
