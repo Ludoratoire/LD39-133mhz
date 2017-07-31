@@ -20,7 +20,7 @@ public abstract class GameTask {
             return "Task " + name + " already killed.";
 
         enabled = false;
-        consumption = cost;
+        consumption = 0;
         return "Task " + name + " killed.";
     }
 

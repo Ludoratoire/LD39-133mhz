@@ -10,8 +10,8 @@ public class LuminosityTask : GameTask {
 
     public LuminosityTask() {
         name = "LUMINOSITY";
-        consumption = 0;
-        cost = 0;
+        consumption = 10;
+        cost = 10;
         description = "What illuminates your path.";
         currentValue = "100";
         base.Enable();
@@ -38,7 +38,7 @@ public class LuminosityTask : GameTask {
         var currentIntValue = int.Parse(currentValue);
         var mgr = GameManager.Instance;
         var currentTotal = mgr.PowerAvailable;
-        var newConsumption = Mathf.CeilToInt((float)(100 - intValue) / 10f);
+        var newConsumption = Mathf.CeilToInt((float)intValue / 10f);
         if (currentTotal + consumption - newConsumption >= 0) {
             currentValue = value;
             foreach (var l in _lights) {

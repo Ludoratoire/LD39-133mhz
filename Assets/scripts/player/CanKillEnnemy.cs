@@ -3,27 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanKillEnnemy : MonoBehaviour
-{
+public class CanKillEnnemy : MonoBehaviour {
     public float bounceForce = 5f;
     public Collider2D killCollider;
     public LayerMask layerToKill;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnCollisionEnter2D(Collision2D collision) {
+        DoesHitEnnemy(collision);
+    }
+
+    private void DoesHitEnnemy(Collision2D collision) {
         // Contact avec un ennemi
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ennemies"))
-        {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ennemies")) {
             if (collision.otherCollider != killCollider)
                 return;
 
@@ -34,8 +33,8 @@ public class CanKillEnnemy : MonoBehaviour
 
             bool zombieKill = false;
             var centerHits = Physics2D.RaycastAll(colliderCenter, Vector2.down, 20f);
-            foreach(var centerHit in centerHits) {
-                if(centerHit.rigidbody != null && centerHit.rigidbody.gameObject.tag == "zombile") {
+            foreach (var centerHit in centerHits) {
+                if (centerHit.rigidbody != null && centerHit.rigidbody.gameObject.tag == "zombile") {
                     ZombileBehaviour zombileBehaviour = centerHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>();
                     if (zombileBehaviour != null) {
                         zombieKill = true;
@@ -54,7 +53,7 @@ public class CanKillEnnemy : MonoBehaviour
 
             if (!zombieKill) {
                 var leftHits = Physics2D.RaycastAll(new Vector2(colliderCenter.x - colliderHalfWidth, colliderCenter.y), Vector2.down, 20f);
-                foreach(var leftHit in leftHits) {
+                foreach (var leftHit in leftHits) {
                     if (leftHit.rigidbody != null && leftHit.rigidbody.gameObject.tag == "zombile") {
                         ZombileBehaviour zombileBehaviour = leftHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>();
                         if (zombileBehaviour != null) {
@@ -113,7 +112,7 @@ public class CanKillEnnemy : MonoBehaviour
             //            raycastHit.collider.enabled = false;
             //            GameObject.Destroy(raycastHit.rigidbody.gameObject);
             //            GetComponent<PlayerBehavior>().OnKillEnnemy();
-                        
+
             //            // Faire rebondir le joueur
             //            GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounceForce, ForceMode2D.Impulse);
             //        }
@@ -121,9 +120,14 @@ public class CanKillEnnemy : MonoBehaviour
             //}
 
             // If no killed ennemy from above then we received a hit
-            if(!zombieKill) {
+            if (!zombieKill) {
                 GetComponent<PlayerBehavior>().ReceiveDamage();
             }
         }
     }
+
+    void OnCollisionStay2D(Collision2D collision) {
+        DoesHitEnnemy(collision);
+    }
+
 }

@@ -3294,7 +3294,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 868d242324f98374c8841272fcaed8fd, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -8847,6 +8847,11 @@ Prefab:
         type: 2}
       propertyPath: layerToKill.m_Bits
       value: 8192
+      objectReference: {fileID: 0}
+    - target: {fileID: 114042485464176182, guid: f468aca09741a9240ba5917bce5a4654,
+        type: 2}
+      propertyPath: recoveryTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f468aca09741a9240ba5917bce5a4654, type: 2}
