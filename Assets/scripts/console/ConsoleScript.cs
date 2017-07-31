@@ -208,7 +208,7 @@ public class ConsoleScript : MonoBehaviour {
         PrintLog("tasklist : list main tasks.\n");
         PrintLog("taskset : update the value of a task.\n");
         PrintLog("taskkill : kill a task.\n");
-        PrintLog("taskstart : kill a task.\n");
+        PrintLog("taskstart : start a task.\n");
         PrintLog("help : display this text.\n");
     }
 
