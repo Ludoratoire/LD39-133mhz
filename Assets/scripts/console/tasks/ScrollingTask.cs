@@ -22,9 +22,9 @@ public class ScrollingTask : GameTask {
         if (!enabled)
             return "Task " + name + " already killed.";
 
-        _playerCamScript.enabled = false;
         var msg = base.Disable();
-        consumption = 0;
+        if(!enabled)
+            _playerCamScript.enabled = false;
         return msg;
     }
 
@@ -32,9 +32,9 @@ public class ScrollingTask : GameTask {
         if (enabled)
             return "Task " + name + " already started.";
 
-        _playerCamScript.enabled = true;
         var msg = base.Enable();
-        consumption = 20;
+        if(enabled)
+            _playerCamScript.enabled = true;
         return msg;
     }
 

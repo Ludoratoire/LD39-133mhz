@@ -23,8 +23,9 @@ public class JumpTask : GameTask {
         if (!enabled)
             return "Task " + name + " already killed.";
 
-        _jumpScript.enabled = false;
         var msg = base.Disable();
+        if(!enabled)
+            _jumpScript.enabled = false;
         return msg;
     }
 
@@ -32,8 +33,9 @@ public class JumpTask : GameTask {
         if (enabled)
             return "Task " + name + " already started.";
 
-        _jumpScript.enabled = true;
         var msg = base.Enable();
+        if(enabled)
+            _jumpScript.enabled = true;
         return msg;
     }
 

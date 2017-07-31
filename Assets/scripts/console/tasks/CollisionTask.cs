@@ -21,9 +21,11 @@ public class CollisionTask : GameTask {
             return "Task " + name + " already killed.";
 
         var msg = base.Disable();
-        var collides = GameObject.FindObjectsOfType<Collider2D>();
-        foreach(var c in collides) {
-            c.isTrigger = true;
+        if(!enabled) {
+            var collides = GameObject.FindObjectsOfType<Collider2D>();
+            foreach(var c in collides) {
+                c.isTrigger = true;
+            }
         }
         return msg;
     }
@@ -33,9 +35,11 @@ public class CollisionTask : GameTask {
             return "Task " + name + " already started.";
 
         var msg = base.Enable();
-        var collides = GameObject.FindObjectsOfType<Collider2D>();
-        foreach (var c in collides) {
-            c.isTrigger = false;
+        if(enabled) {
+            var collides = GameObject.FindObjectsOfType<Collider2D>();
+            foreach (var c in collides) {
+                c.isTrigger = false;
+            }
         }
         return msg;
     }
