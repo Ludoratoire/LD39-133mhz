@@ -52,9 +52,9 @@ public class GameManager : MonoBehaviour {
         taskList.Add(new LuminosityTask());
         taskList.Add(new ResolutionTask());
         taskList.Add(new JumpTask());
-        //taskList.Add(new MobilityTask());
-        //taskList.Add(new CollisionTask());
-        //taskList.Add(new ScrollingTask());
+        taskList.Add(new MobilityTask());
+        taskList.Add(new CollisionTask());
+        taskList.Add(new ScrollingTask());
     }
 	
     // Tasks

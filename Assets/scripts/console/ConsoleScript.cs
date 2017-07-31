@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ConsoleScript : MonoBehaviour {
 
     public InputField consoleInput;
-    public Text consoleOutput;
+    public GameObject consoleOutput;
+    public GameObject consoleLinePrefab;
+    public ScrollRect consoleScroll;
 
     protected Dictionary<string, MethodInfo> _methods;
     protected Dictionary<string, MethodInfo> _filters;
@@ -36,26 +39,32 @@ public class ConsoleScript : MonoBehaviour {
             }
         }
 
-
+        consoleInput.onEndEdit.AddListener((value) => ReceivedCommand(value));
 	}
-	
+
 	public void ReceivedCommand(string input) {
 
-        ParseInput(input);
-        if(_methods.ContainsKey(_lastCommand)) {
-            _methods[_lastCommand].Invoke(this, null);
+        if(Input.GetKeyDown(KeyCode.Return)) {
+            ParseInput(input);
+            if(_methods.ContainsKey(_lastCommand)) {
+                _methods[_lastCommand].Invoke(this, null);
+            }
+            else {
+                PrintLog("Command not found\n");
+            }
+            consoleInput.text = "";
+            ClearInput();
         }
         else {
-            consoleOutput.text += "Command not found\n";
+            consoleInput.ActivateInputField();
         }
-        consoleInput.text = "";
-        ClearInput();
 
     }
 
     // Commands
     private void ParseInput(string input) {
-        consoleOutput.text += "> " + input + "\n";
+        
+        PrintLog("> " + input + "\n");
         var splits = input.Split(' ');
         _lastCommand = splits[0];
 
@@ -70,6 +79,17 @@ public class ConsoleScript : MonoBehaviour {
         _lastCommand = "";
         _lastFilter = "";
         _lastFilterParam = "";
+    }
+
+    public void PrintLog(string text) {
+
+        var line = GameObject.Instantiate(consoleLinePrefab, consoleOutput.transform);
+        line.GetComponent<Text>().text = text;
+        consoleInput.transform.SetAsLastSibling();
+        Canvas.ForceUpdateCanvases();
+        consoleScroll.verticalNormalizedPosition = 0;
+        Canvas.ForceUpdateCanvases();
+
     }
 
     public class ConsoleCommandAttribute : Attribute {
@@ -96,69 +116,69 @@ public class ConsoleScript : MonoBehaviour {
     void TaskList() {
         var mgr = GameManager.Instance;
         foreach(var task in mgr.taskList) {
-            consoleOutput.text += task.name + " | " + task.GetConsumption() + "Mhz | " + task.description + "\n";
+            PrintLog(task.name + " | " + task.GetConsumption() + "Mhz | " + task.description + "\n");
         }
     }
 
     [ConsoleCommand("taskkill")]
     void TaskKill() {
         if (_lastFilter.Length <= 0) {
-            consoleOutput.text += "Missing filter for command " + _lastCommand + "\n";
+            PrintLog("Missing filter for command " + _lastCommand + "\n");
             return;
         }
 
         if(_lastFilterParam.Length > 0) {
-            consoleOutput.text += "Wrong syntax !\n taskkill " + _lastFilter + " expects no parameter.\n";
+            PrintLog("Wrong syntax !\n taskkill " + _lastFilter + " expects no parameter.\n");
             return;
         }
 
         if (!taskKillFilters.Contains(_lastFilter)) {
-            consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
+            PrintLog("Filter " + _lastFilter + " not available for command " + _lastCommand + "\n");
             return;
         }
 
         var mgr = GameManager.Instance;
         GameTask task = mgr.GetTask(_lastFilter);
         if (task == null)
-            consoleOutput.text += "No task " + _lastFilter + "\n";
+            PrintLog("No task " + _lastFilter + "\n");
         else
-            consoleOutput.text += task.Disable() + "\n";
+            PrintLog(task.Disable() + "\n");
     }
 
     [ConsoleCommand("taskstart")]
     void TaskStart() {
         if (_lastFilter.Length <= 0) {
-            consoleOutput.text += "Missing filter for command " + _lastCommand + "\n";
+            PrintLog("Missing filter for command " + _lastCommand + "\n");
             return;
         }
 
         if (_lastFilterParam.Length > 0) {
-            consoleOutput.text += "Wrong syntax !\n taskstart " + _lastFilter + " expects no parameter.\n";
+            PrintLog("Wrong syntax !\n taskstart " + _lastFilter + " expects no parameter.\n");
             return;
         }
 
         if (!taskKillFilters.Contains(_lastFilter)) {
-            consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
+            PrintLog("Filter " + _lastFilter + " not available for command " + _lastCommand + "\n");
             return;
         }
 
         var mgr = GameManager.Instance;
         GameTask task = mgr.GetTask(_lastFilter);
         if (task == null)
-            consoleOutput.text += "No task " + _lastFilter + "\n";
+            PrintLog("No task " + _lastFilter + "\n");
         else
-            consoleOutput.text += task.Enable() + "\n";
+            PrintLog(task.Enable() + "\n");
     }
 
     [ConsoleCommand("taskset")]
     void TaskSet() {
         if(_lastFilter.Length == 0) {
-            consoleOutput.text += "Missing filter for command " + _lastCommand + "\n";
+            PrintLog("Missing filter for command " + _lastCommand + "\n");
             return;
         }
 
         if(!taskSetFilters.Contains(_lastFilter)) {
-            consoleOutput.text += "Filter " + _lastFilter + " not available for command " + _lastCommand + "\n";
+            PrintLog("Filter " + _lastFilter + " not available for command " + _lastCommand + "\n");
             return;
         }
 
@@ -166,24 +186,30 @@ public class ConsoleScript : MonoBehaviour {
         GameTask task = mgr.GetTask(_lastFilter);
 
         if (_lastFilterParam.Length == 0 && task.requireParameter) {
-            consoleOutput.text += "Missing parameter for filter " + _lastFilter + ".\n";
-            consoleOutput.text += _lastCommand + " " + task.example;
+            PrintLog("Missing parameter for filter " + _lastFilter + ".\n");
+            PrintLog(_lastCommand + " " + task.example);
             return;
         }
 
         if(task == null)
-            consoleOutput.text += "No task " + _lastFilter + "\n";
+            PrintLog("No task " + _lastFilter + "\n");
         else
-            consoleOutput.text += task.SetValue(_lastFilterParam) + "\n";
+            PrintLog(task.SetValue(_lastFilterParam) + "\n");
     }
 
     [ConsoleCommand("help")]
     void Help() {
         if(_lastFilter.Length > 0) {
-            consoleOutput.text += "Wrong syntax !\n";
-            consoleOutput.text += "Command help accept not filters\n";
+            PrintLog("Wrong syntax !\n");
+            PrintLog("Command help accept no filter\n");
             return;
         }
+
+        PrintLog("tasklist : list main tasks.\n");
+        PrintLog("taskset : update the value of a task.\n");
+        PrintLog("taskkill : kill a task.\n");
+        PrintLog("taskstart : kill a task.\n");
+        PrintLog("help : display this text.\n");
     }
 
 }
