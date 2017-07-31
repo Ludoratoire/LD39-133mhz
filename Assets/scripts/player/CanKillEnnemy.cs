@@ -39,6 +39,8 @@ public class CanKillEnnemy : MonoBehaviour
                     ZombileBehaviour zombileBehaviour = centerHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>();
                     if (zombileBehaviour != null) {
                         zombieKill = true;
+                        GameManager.Instance.KillScoreUp();
+
                         centerHit.collider.enabled = false;
                         GameObject.Destroy(centerHit.rigidbody.gameObject);
                         GetComponent<PlayerBehavior>().OnKillEnnemy();
@@ -57,6 +59,8 @@ public class CanKillEnnemy : MonoBehaviour
                         ZombileBehaviour zombileBehaviour = leftHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>();
                         if (zombileBehaviour != null) {
                             zombieKill = true;
+                            GameManager.Instance.KillScoreUp();
+
                             leftHit.collider.enabled = false;
                             GameObject.Destroy(leftHit.rigidbody.gameObject);
                             GetComponent<PlayerBehavior>().OnKillEnnemy();
