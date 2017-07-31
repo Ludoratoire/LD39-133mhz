@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
     public GameObject restartButton;
     public int nextKillPoint = 1;
 
+    protected AudioSource _audioSource;
     protected RetroPixel _retroPixel;
     private GameObject _levelInstance;
 
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
             return;
         }
+
+        _audioSource = GetComponent<AudioSource>();
 
         LevelModel.SetActive(false);
         _levelInstance = Object.Instantiate(LevelModel);
@@ -94,6 +97,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Lose() {
+        _audioSource.Play();
         bigMessage.text = "YOU LOSE !";
         bigMessage.enabled = true;
         restartButton.SetActive(true);

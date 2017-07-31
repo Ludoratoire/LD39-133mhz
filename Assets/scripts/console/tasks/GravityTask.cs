@@ -12,7 +12,7 @@ public class GravityTask : GameTask {
         description = "What keeps your feet on the ground.";
         _defaultGravity = Physics2D.gravity;
         requireParameter = true;
-        example = "GRAVITY X\nX should be an integer between 10 and 100.\n";
+        example = "GRAVITY X. X should be an integer between 10 and 100.\n";
         currentValue = "100";
         base.Enable();
     }

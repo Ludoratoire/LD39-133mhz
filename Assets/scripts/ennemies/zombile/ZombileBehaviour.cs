@@ -11,6 +11,10 @@ public class ZombileBehaviour : MonoBehaviour
     public int fightVelocity;
     public int visionRange;
 
+    public AudioClip deathSound;
+
+    protected AudioSource _audioSource;
+
     public enum EnnemyType
     {
         Zombile
@@ -26,6 +30,8 @@ public class ZombileBehaviour : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _ennemyWalk = GetComponent<EnnemyWalk>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.PlayDelayed(UnityEngine.Random.Range(0f, 3f));
     }
 
     void FixedUpdate()
@@ -129,6 +135,11 @@ public class ZombileBehaviour : MonoBehaviour
 
     public void Kill()
     {
-        GameObject.Destroy(gameObject);
+        _audioSource.Stop();
+        _audioSource.clip = deathSound;
+        _audioSource.loop = false;
+        _audioSource.Play();
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 }

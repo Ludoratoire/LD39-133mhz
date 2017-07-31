@@ -42,7 +42,7 @@ public class CanKillEnnemy : MonoBehaviour
                         GameManager.Instance.KillScoreUp();
 
                         centerHit.collider.enabled = false;
-                        GameObject.Destroy(centerHit.rigidbody.gameObject);
+                        centerHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>().Kill();
                         GetComponent<PlayerBehavior>().OnKillEnnemy();
 
                         // Faire rebondir le joueur
@@ -62,7 +62,7 @@ public class CanKillEnnemy : MonoBehaviour
                             GameManager.Instance.KillScoreUp();
 
                             leftHit.collider.enabled = false;
-                            GameObject.Destroy(leftHit.rigidbody.gameObject);
+                            leftHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>().Kill();
                             GetComponent<PlayerBehavior>().OnKillEnnemy();
 
                             // Faire rebondir le joueur
@@ -82,7 +82,7 @@ public class CanKillEnnemy : MonoBehaviour
                             zombieKill = true;
                             GameManager.Instance.KillScoreUp();
                             rightHit.collider.enabled = false;
-                            GameObject.Destroy(rightHit.rigidbody.gameObject);
+                            rightHit.rigidbody.gameObject.GetComponent<ZombileBehaviour>().Kill();
                             GetComponent<PlayerBehavior>().OnKillEnnemy();
 
                             // Faire rebondir le joueur
