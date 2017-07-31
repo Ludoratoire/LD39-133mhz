@@ -19,6 +19,9 @@ public class PlayerBehavior : MonoBehaviour
     private Animator _animator;
 
     public float fallLimit = -10f;
+    public float recoveryTime = 2f;
+
+    private float _nextDamageTime = 0;
 
     // Use this for initialization
     void Start()
@@ -62,23 +65,28 @@ public class PlayerBehavior : MonoBehaviour
         }
 
         if(gameObject.transform.position.y < fallLimit) {
+            ReceiveDamage();
             GameManager.Instance.ResetPlayerPos();
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Ennemies")) {
-            var mgr = GameManager.Instance;
-            mgr.life--;
-            if(mgr.life <= 0) {
-                mgr.score = 0;
-                GameManager.Instance.ResetPlayerPos();
-            }
         }
     }
 
     public void OnKillEnnemy()
     {
         GetComponent<Animator>().SetTrigger("playerHit");
+    }
+
+    public void ReceiveDamage() {
+        var currentTime = Time.realtimeSinceStartup;
+        if(currentTime > _nextDamageTime) {
+            var mgr = GameManager.Instance;
+            mgr.life--;
+            if (mgr.life <= 0) {
+                mgr.score = 0;
+                mgr.life = 3;
+                mgr.ResetPlayerPos();
+            }
+            _nextDamageTime = currentTime + recoveryTime;
+        }
+
     }
 }

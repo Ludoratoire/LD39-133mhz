@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 4
   particleSys: {fileID: 198790280996905672}
+  boxCollider: {fileID: 61505441160279944}
 --- !u!198 &198790280996905672
 ParticleSystem:
   m_ObjectHideFlags: 1

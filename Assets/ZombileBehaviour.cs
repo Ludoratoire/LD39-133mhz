@@ -130,6 +130,6 @@ public class ZombileBehaviour : MonoBehaviour
 
     public void Kill()
     {
-        DestroyObject(gameObject);
+        GameObject.Destroy(gameObject);
     }
 }

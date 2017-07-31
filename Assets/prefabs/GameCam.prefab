@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114907934678430422}
   m_Layer: 0
   m_Name: GameCam
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -656,10 +656,10 @@ Camera:
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.33
-    y: 0.14444445
-    width: 0.67
-    height: 0.7111111
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -670,7 +670,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 56102dc5efb2efb4595f8b1e83732a3b, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1

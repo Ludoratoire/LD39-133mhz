@@ -51,5 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111a13b270cb7164580df54abb613f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  startPos: {fileID: 0}
   gameCamera: {fileID: 0}
   powerAvailable: 133
+  speedFactor: 100
+  life: 3
+  score: 0

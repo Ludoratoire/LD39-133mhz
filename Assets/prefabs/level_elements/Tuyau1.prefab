@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4378719305662618}
   - component: {fileID: 61004859439795940}
   - component: {fileID: 114376844051454306}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: hitboxSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 4
   particleSys: {fileID: 198815425339900008}
+  boxCollider: {fileID: 61004859439795940}
 --- !u!198 &198815425339900008
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -237,7 +238,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2044769826
+  randomSeed: -555222932
   InitialModule:
     serializedVersion: 3
     enabled: 1
